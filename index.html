@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Empatia e Acessibilidade Multissensorial - Como o Mundo Funciona</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --font-scale: 1;
+            --main-bg: #0f172a;
+            --main-text: #f8fafc;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --accent-blue: #3b82f6;
+        }
+
+        body {
+            font-size: calc(1rem * var(--font-scale));
+            background-color: var(--main-bg);
+            color: var(--main-text);
+            transition: font-size 0.2s, background-color 0.3s;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        /* Indicador de Foco Acessível de Alta Visibilidade */
+        *:focus-visible {
+            outline: 4px solid #f59e0b !important;
+            outline-offset: 4px !important;
+            border-radius: 6px;
+        }
+
+        /* Estilos do Modo Alto Contraste */
+        body.high-contrast {
+            --main-bg: #000000;
+            --main-text: #ffff00;
+            --card-bg: #050505;
+            --card-border: #ffff00;
+        }
+
+        body.high-contrast .bg-card {
+            background-color: #000000 !important;
+            border: 2px solid #ffff00 !important;
+            color: #ffff00 !important;
+        }
+
+        body.high-contrast button {
+            background-color: #000000 !important;
+            color: #ffff00 !important;
+            border: 2px solid #ffff00 !important;
+        }
+
+        body.high-contrast button:hover {
+            background-color: #ffff00 !important;
+            color: #000000 !important;
+        }
+
+        /* Simuladores Oculares Baseados em CSS */
+        .vision-cataract {
+            filter: blur(5px) contrast(65%) brightness(125%);
+        }
+
+        .vision-glaucoma {
+            mask-image: radial-gradient(circle at center, black 15%, transparent 60%);
+            -webkit-mask-image: radial-gradient(circle at center, black 15%, transparent 60%);
+        }
+
+        .vision-macular {
+            position: relative;
+        }
+        .vision-macular::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(0,0,0,0.98) 0%, rgba(20,20,20,0.8) 60%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(8px);
+        }
+
+        .vision-diabetic {
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0,0,0,0.95) 25px, transparent 40px),
+                radial-gradient(circle at 70% 65%, rgba(0,0,0,0.92) 35px, transparent 55px),
+                radial-gradient(circle at 40% 80%, rgba(0,0,0,0.88) 20px, transparent 35px),
+                radial-gradient(circle at 85% 20%, rgba(0,0,0,0.96) 30px, transparent 45px);
+        }
+
+        /* Filtros SVG para Daltonismo */
+        .filter-protanopia { filter: url('#protanopia-filter'); }
+        .filter-deuteranopia { filter: url('#deuteranopia-filter'); }
+        .filter-tritanopia { filter: url('#tritanopia-filter'); }
+        .filter-achromatopsia { filter: url('#achromatopsia-filter'); }
+
+        /* Animação para Sobrecarga Sensorial */
+        @keyframes strobeBg {
+            0% { background-color: rgba(239, 68, 68, 0.25); }
+            25% { background-color: rgba(234, 179, 8, 0.25); }
+            50% { background-color: rgba(59, 130, 246, 0.25); }
+            75% { background-color: rgba(168, 85, 247, 0.25); }
+            100% { background-color: rgba(239, 68, 68, 0.25); }
+        }
+
+        .sensory-strobe {
+            animation: strobeBg 0.4s infinite alternate ease-in-out;
+        }
+
+        @keyframes shakeBox {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            20% { transform: translate(-3px, 3px) rotate(-1deg); }
+            40% { transform: translate(3px, -2px) rotate(1deg); }
+            60% { transform: translate(-2px, -3px) rotate(0deg); }
+            80% { transform: translate(3px, 2px) rotate(1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .sensory-shake {
+            animation: shakeBox 0.15s infinite;
+        }
+
+        /* Floaters (Moscas Volantes) no cursor */
+        .floater-dot {
+            position: absolute;
+            background: rgba(30, 30, 30, 0.65);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(2px);
+            transition: transform 0.8s ease-out;
+            z-index: 30;
+        }
+
+        /* Animações Sensoriais de Áudio */
+        @keyframes soundWave {
+            0%, 100% { height: 4px; }
+            50% { height: 20px; }
+        }
+
+        .sound-wave-bar {
+            width: 3px;
+            background-color: #f59e0b;
+            display: inline-block;
+            border-radius: 2px;
+        }
+
+        .speaking-active .sound-wave-bar:nth-child(1) { animation: soundWave 0.6s infinite ease-in-out; }
+        .speaking-active .sound-wave-bar:nth-child(2) { animation: soundWave 0.4s infinite ease-in-out 0.1s; }
+        .speaking-active .sound-wave-bar:nth-child(3) { animation: soundWave 0.8s infinite ease-in-out 0.2s; }
+        .speaking-active .sound-wave-bar:nth-child(4) { animation: soundWave 0.5s infinite ease-in-out 0.3s; }
+    </style>
+</head>
+<body class="min-h-full flex flex-col">
+
+    <svg class="hidden" aria-hidden="true">
+        <defs>
+            <filter id="protanopia-filter">
+                <feColorMatrix type="matrix" values="
+                    0.56667 0.43333 0.00000 0 0
+                    0.55833 0.44167 0.00000 0 0
+                    0.00000 0.24167 0.75833 0 0
+                    0       0       0       1 0" />
+            </filter>
+            <filter id="deuteranopia-filter">
+                <feColorMatrix type="matrix" values="
+                    0.625 0.375 0.000 0 0
+                    0.700 0.300 0.000 0 0
+                    0.000 0.300 0.700 0 0
+                    0     0     0     1 0" />
+            </filter>
+            <filter id="tritanopia-filter">
+                <feColorMatrix type="matrix" values="
+                    0.95 0.05 0.00 0 0
+                    0.00 0.43 0.57 0 0
+                    0.00 0.47 0.53 0 0
+                    0    0    0    1 0" />
+            </filter>
+            <filter id="achromatopsia-filter">
+                <feColorMatrix type="matrix" values="
+                    0.299 0.587 0.114 0 0
+                    0.299 0.587 0.114 0 0
+                    0.299 0.587 0.114 0 0
+                    0     0     0     1 0" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Atalho de Salto de Conteúdo -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-amber-500 text-black font-bold p-3 z-50 rounded-md">
+        Pular para o conteúdo principal
+    </a>
+
+    <header role="banner" class="sticky top-0 z-40 bg-slate-900 border-b border-slate-700 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-eye-low-vision text-amber-400 text-2xl" aria-hidden="true"></i>
+                <div>
+                    <h1 class="font-extrabold text-lg text-white tracking-wide">Mundo Acessível</h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Laboratório de Empatia & Acessibilidade Multissensorial</p>
+                </div>
+            </div>
+
+            <nav aria-label="Controles Rápidos de Acessibilidade" class="flex flex-wrap items-center gap-2">
+                <!-- Ativador do Leitor de Tela Interno -->
+                <button id="btn-toggle-speech" onclick="toggleScreenReader()" aria-label="Ativar ou desativar o leitor de voz interno" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm flex items-center gap-2 transition">
+                    <i id="speech-icon" class="fa-solid fa-volume-high text-green-400" aria-hidden="true"></i>
+                    <span>Voz: <strong id="speech-status">Inativa</strong></span>
+                    <div id="speech-wave" class="hidden flex items-center gap-0.5 h-5 ml-1">
+                        <span class="sound-wave-bar"></span>
+                        <span class="sound-wave-bar"></span>
+                        <span class="sound-wave-bar"></span>
+                        <span class="sound-wave-bar"></span>
+                    </div>
+                </button>
+
+                <!-- Painel de Voz Sintetizada -->
+                <button onclick="toggleAudioPanel()" aria-label="Configurar sintetizador de voz" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-lg text-sm flex items-center gap-2 transition">
+                    <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+                    <span>Ajustar Voz</span>
+                </button>
+
+                <!-- Zoom de Fonte -->
+                <div class="flex items-center bg-slate-800 border border-slate-600 rounded-lg p-0.5">
+                    <button onclick="changeFontSize(-0.1)" aria-label="Diminuir fonte" class="px-2 py-1 text-sm font-bold hover:bg-slate-700 rounded">A-</button>
+                    <button onclick="resetFontSize()" aria-label="Resetar tamanho da fonte" class="px-2 py-1 text-xs hover:bg-slate-700 rounded border-x border-slate-700">100%</button>
+                    <button onclick="changeFontSize(0.1)" aria-label="Aumentar fonte" class="px-2 py-1 text-sm font-bold hover:bg-slate-700 rounded">A+</button>
+                </div>
+
+                <!-- Modo Alto Contraste -->
+                <button onclick="toggleHighContrast()" aria-label="Alternar modo de alto contraste" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-sm flex items-center gap-2 transition">
+                    <i class="fa-solid fa-circle-half-stroke text-yellow-400" aria-hidden="true"></i>
+                    <span>Alto Contraste</span>
+                </button>
+
+                <!-- Filtro Global -->
+                <select id="global-vision-filter" onchange="applyGlobalFilter(this.value)" aria-label="Simular visão na página inteira" class="bg-slate-800 border border-slate-600 text-sm rounded-lg p-1.5 text-white">
+                    <option value="none">Filtro Global: NENHUM</option>
+                    <option value="filter-protanopia">Protanopia (Sem Vermelho)</option>
+                    <option value="filter-deuteranopia">Deuteranopia (Sem Verde)</option>
+                    <option value="filter-tritanopia">Tritanopia (Sem Azul)</option>
+                    <option value="filter-achromatopsia">Acromatopsia (Preto e Branco)</option>
+                </select>
+            </nav>
+        </div>
+
+        <!-- PAINEL DE CONFIGURAÇÃO DA VOZ -->
+        <div id="audio-config-panel" class="hidden bg-slate-950 border-b border-amber-500/40 p-4 text-slate-200">
+            <div class="max-w-7xl mx-auto space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                    <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-gear" aria-hidden="true"></i> Controles Avançados de Audibilidade da Voz
+                    </h3>
+                    <button onclick="toggleAudioPanel()" class="text-xs text-slate-400 hover:text-white">
+                        <i class="fa-solid fa-xmark text-base" aria-hidden="true"></i> Fechar
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+                    <div class="space-y-1">
+                        <label for="voice-select" class="font-bold text-slate-300">Voz do Sistema:</label>
+                        <select id="voice-select" onchange="updateVoiceSelection()" class="w-full bg-slate-800 border border-slate-700 rounded p-1.5 text-white">
+                            <option value="">Carregando vozes do dispositivo...</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex justify-between">
+                            <label for="voice-volume" class="font-bold text-slate-300">Volume:</label>
+                            <span id="val-volume" class="text-amber-400 font-bold">100%</span>
+                        </div>
+                        <input type="range" id="voice-volume" min="0" max="1" step="0.1" value="1" oninput="updateAudioParams()" class="w-full accent-amber-500">
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex justify-between">
+                            <label for="voice-rate" class="font-bold text-slate-300">Velocidade (Clareza):</label>
+                            <span id="val-rate" class="text-amber-400 font-bold">1.0x</span>
+                        </div>
+                        <input type="range" id="voice-rate" min="0.5" max="1.8" step="0.1" value="1" oninput="updateAudioParams()" class="w-full accent-amber-500">
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex justify-between">
+                            <label for="voice-pitch" class="font-bold text-slate-300">Tom (Grave/Agudo):</label>
+                            <span id="val-pitch" class="text-amber-400 font-bold">1.0</span>
+                        </div>
+                        <input type="range" id="voice-pitch" min="0.5" max="1.5" step="0.1" value="1" oninput="updateAudioParams()" class="w-full accent-amber-500">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button onclick="testCurrentVoice()" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded flex items-center gap-2 text-xs">
+                        <i class="fa-solid fa-play" aria-hidden="true"></i> Testar Sintetizador
+                    </button>
+                    <button onclick="stopVoice()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs">
+                        Parar Áudio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- WRAPPER PARA APLICAÇÃO DE FILTROS GLOBAIS -->
+    <div id="simulated-wrapper" class="flex-grow flex flex-col transition-all">
+
+        <main id="main-content" role="main" class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-8">
+
+            <section class="bg-card bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg space-y-4">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div class="space-y-3 max-w-3xl">
+                        <span class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-full text-xs font-bold uppercase tracking-wider">
+                            Experiência Imersiva de Empatia Digital & Multissensorial
+                        </span>
+                        <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                            Como o Mundo Funciona Através de Outras Perspectivas?
+                        </h2>
+                        <p class="text-slate-300 leading-relaxed">
+                            Navegue entre os módulos abaixo para compreender a fundo diferentes deficiências, distúrbios neurodivergentes e condições sensoriais/motoras através de simuladores em tempo real.
+                        </p>
+                    </div>
+                    <button onclick="speakText('Bem-vindo ao Portal Mundo Acessível. Selecione as abas superiores para vivenciar as simulações de Daltonismo, Visão, Surdez, Sobrecarga Sensorial, Afasia, Sinestesia, Deficiência Motora e WCAG.')" class="bg-amber-500 hover:bg-amber-400 text-black font-bold px-5 py-3 rounded-xl flex items-center gap-2 shadow-lg transition shrink-0">
+                        <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+                        Ouvir Introdução
+                    </button>
+                </div>
+            </section>
+
+            <!-- NAVEGAÇÃO DE ABAS EXPANDIDA COM NOVAS DEFICIÊNCIAS -->
+            <section aria-label="Categorias de Deficiência">
+                <div class="border-b border-slate-700">
+                    <ul class="flex flex-wrap -mb-px text-sm font-bold text-center text-slate-400" role="tablist">
+                        <li class="me-1" role="presentation">
+                            <button id="tab-color" onclick="switchTab('color')" role="tab" aria-selected="true" class="inline-flex items-center p-4 border-b-2 border-amber-500 text-amber-400 gap-2 text-base">
+                                <i class="fa-solid fa-palette" aria-hidden="true"></i> Daltonismo
+                            </button>
+                        </li>
+                        <li class="me-1" role="presentation">
+                            <button id="tab-blind" onclick="switchTab('blind')" role="tab" aria-selected="false" class="inline-flex items-center p-4 border-b-2 border-transparent hover:text-slate-200 gap-2 text-base">
+                                <i class="fa-solid fa-eye-slash" aria-hidden="true"></i> Visão & Moscas Volantes
+                            </button>
+                        </li>
+                        <li class="me-1" role="presentation">
+                            <button id="tab-deaf" onclick="switchTab('deaf')" role="tab" aria-selected="false" class="inline-flex items-center p-4 border-b-2 border-transparent hover:text-slate-200 gap-2 text-base">
+                                <i class="fa-solid fa-ear-deaf" aria-hidden="true"></i> Surdez & Audição
+                            </button>
+                        </li>
+                        <li class="me-1" role="presentation">
+                            <button id="tab-sensory" onclick="switchTab('sensory')" role="tab" aria-selected="false" class="inline-flex items-center p-4 border-b-2 border-transparent hover:text-slate-200 gap-2 text-base">
+                                <i class="fa-solid fa-bolt text-red-400" aria-hidden="true"></i> Sobrecarga Sensorial
+                            </button>
+                        </li>
+                        <li class="me-1" role="presentation">
+                            <button id="tab-aphasia" onclick="switchTab('aphasia')" role="tab" aria-selected="false" class="inline-flex items-center p-4 border-b-2 border-transparent hover:text-slate-200 gap-2 text-base">
+                                <i class="fa-solid fa-language" aria-hidden="true"></i> Afasia & Linguagem
+                            </button>
+                        </li>
+                        <li class="me-1" role="presentation">
+                            <button id="tab-synesthesia" onclick="switchTab('synesthesia')" role="tab" aria-selected="false" class="inline-flex items-center p-4 border-b-2 border-transparent hover:text-slate-200 gap-2 text-base">
+                                <i class="fa-solid fa-wand-magic-sparkles text-purple-400" aria-hidden="true"></i> Sinestesia
+                            </button>
+                        </li>
+                        <li class="me-1" role="presentation">
+                            <button id="tab-motor" onclick="switchTab('motor')" role="tab" aria-selected="false" class="inline-flex items-center p-4 border-b-2 border-transparent hover:text-slate-200 gap-2 text-base">
+                                <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> Motora & Artrite
+                            </button>
+                        </li>
+                        <li class="me-1" role="presentation">
+                            <button id="tab-wcag" onclick="switchTab('wcag')" role="tab" aria-selected="false" class="inline-flex items-center p-4 border-b-2 border-transparent hover:text-slate-200 gap-2 text-base">
+                                <i class="fa-solid fa-code" aria-hidden="true"></i> Código WCAG
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- ================= 1. DALTONISMO ================= -->
+                <div id="panel-color" role="tabpanel" class="py-6 space-y-8">
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-book-open text-amber-400" aria-hidden="true"></i>
+                                O que é o Daltonismo?
+                            </h3>
+                            <button onclick="speakText('O Daltonismo é uma condição genética que altera a percepção das cores nos cones oculares. Pessoas daltônicas encontram barreiras no trânsito, em mapas e gráficos onde a cor é a única informação.')" class="text-sm text-amber-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Ouvir Explicação
+                            </button>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            O Daltonismo afeta centenas de milhões de pessoas no mundo. Não significa ver tudo em preto e branco, mas sim a incapacidade de distinguir nuances entre tons de verde, vermelho, azul e amarelo.
+                        </p>
+                    </div>
+
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+                        <h3 class="text-xl font-bold text-white">Simulador de Perspectiva Urbana</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="setUrbanFilter('none')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Visão Normal</button>
+                            <button onclick="setUrbanFilter('filter-protanopia')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Protanopia (Sem Vermelho)</button>
+                            <button onclick="setUrbanFilter('filter-deuteranopia')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Deuteranopia (Sem Verde)</button>
+                            <button onclick="setUrbanFilter('filter-tritanopia')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Tritanopia (Sem Azul)</button>
+                            <button onclick="setUrbanFilter('filter-achromatopsia')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Acromatopsia (Preto e Branco)</button>
+                        </div>
+
+                        <div id="urban-scene-container" class="grid md:grid-cols-2 gap-6 transition-all duration-300">
+                            <div class="p-5 bg-slate-900 rounded-xl border border-slate-700 space-y-4">
+                                <h4 class="font-bold text-amber-400 text-sm uppercase">Cena 1: Semáforo e Sinalização</h4>
+                                <div class="flex items-center justify-around bg-slate-950 p-6 rounded-xl border border-slate-800">
+                                    <div class="w-16 bg-slate-900 border-2 border-slate-700 p-3 rounded-2xl flex flex-col items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-red-600 shadow-lg shadow-red-600/50"></div>
+                                        <div class="w-10 h-10 rounded-full bg-amber-600/20"></div>
+                                        <div class="w-10 h-10 rounded-full bg-emerald-600/20"></div>
+                                    </div>
+                                    <div class="text-xs text-slate-300 space-y-2 max-w-[200px]">
+                                        <p class="font-bold">Desafio no Trânsito:</p>
+                                        <p>Se as luzes não estivessem em posição padrão fixa, distinguir a cor de Pare ou Siga seria crítico.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-5 bg-slate-900 rounded-xl border border-slate-700 space-y-4">
+                                <h4 class="font-bold text-amber-400 text-sm uppercase">Cena 2: Mapas de Metrô</h4>
+                                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                                    <div class="h-3 bg-red-600 rounded-full flex items-center justify-between px-2 text-[10px] font-bold text-white">Linha Vermelha</div>
+                                    <div class="h-3 bg-emerald-600 rounded-full flex items-center justify-between px-2 text-[10px] font-bold text-white">Linha Verde</div>
+                                    <div class="h-3 bg-amber-500 rounded-full flex items-center justify-between px-2 text-[10px] font-bold text-black">Linha Amarela</div>
+                                    <div class="h-3 bg-blue-600 rounded-full flex items-center justify-between px-2 text-[10px] font-bold text-white">Linha Azul</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 2. VISÃO & MOSCAS VOLANTES ================= -->
+                <div id="panel-blind" role="tabpanel" class="hidden py-6 space-y-8">
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-book-open text-amber-400" aria-hidden="true"></i>
+                                Patologias Oculares e Moscas Volantes (Floaters)
+                            </h3>
+                            <button onclick="speakText('A miopia severa e degenerações vítreas geram moscas volantes, que são pequenas manchas ou teias escuras que flutuam no campo de visão e acompanham o movimento dos olhos, dificultando a leitura de textos pequenos e de baixo contraste.')" class="text-sm text-amber-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Ouvir Explicação
+                            </button>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            Além de glaucoma, catarata e degeneração macular, pessoas com alta miopia enfrentam moscas volantes (floaters). São detritos no humor vítreo que projetam sombras flutuantes na retina, cobrindo palavras conforme o olho tenta focar.
+                        </p>
+                    </div>
+
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+                        <h3 class="text-xl font-bold text-white">Simulador de Visão e Moscas Volantes</h3>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="setEyePathology('none')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Visão Normal</button>
+                            <button onclick="setEyePathology('vision-macular')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Degeneração Macular</button>
+                            <button onclick="setEyePathology('vision-glaucoma')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Glaucoma</button>
+                            <button onclick="setEyePathology('vision-cataract')" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold">Catarata</button>
+                            <button onclick="toggleFloaters()" id="btn-floaters" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-lg text-xs">Ativar Moscas Volantes (Floaters)</button>
+                        </div>
+
+                        <div id="eye-pathology-container" onmousemove="updateFloatersPosition(event)" class="p-8 bg-slate-900 rounded-xl border border-slate-700 relative overflow-hidden space-y-4 min-h-[220px]">
+                            <!-- Elementos dinâmicos das moscas volantes -->
+                            <div id="floater-1" class="floater-dot hidden w-8 h-8"></div>
+                            <div id="floater-2" class="floater-dot hidden w-12 h-5"></div>
+                            <div id="floater-3" class="floater-dot hidden w-6 h-10"></div>
+
+                            <h4 class="text-2xl font-bold text-amber-400">Aviso Oficial de Utilidade Pública</h4>
+                            <p class="text-slate-200 leading-relaxed text-sm md:text-base">
+                                Mova o mouse sobre este texto. Note como as manchas escuras flutuam com um leve atraso, cobrindo exatamente a palavra que você tenta ler. É por isso que fontes maiores e espaçamento adequado são vitais.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 3. SURDEZ & AUDIÇÃO ================= -->
+                <div id="panel-deaf" role="tabpanel" class="hidden py-6 space-y-8">
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-book-open text-amber-400" aria-hidden="true"></i>
+                            O que é a Surdez e Acessibilidade Visual?
+                        </h3>
+                        <p class="text-slate-300 leading-relaxed">
+                            Pessoas surdas dependem inteiramente de alertas luminosos e sinalização em texto/LIBRAS.
+                        </p>
+                    </div>
+
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+                        <h3 class="text-xl font-bold text-white">Desafio de Alertas sem Áudio</h3>
+                        <div class="p-6 bg-slate-900 rounded-xl border border-slate-700 space-y-4 text-center">
+                            <i class="fa-solid fa-bell-slash text-4xl text-amber-400" aria-hidden="true"></i>
+                            <p class="text-sm text-slate-300">
+                                Sem avisos luminosos ou legendas, alarmes sonoros em trens e aeroportos são completamente invisíveis.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 4. SOBRECARGA SENSORIAL INTENSIFICADA ================= -->
+                <div id="panel-sensory" role="tabpanel" class="hidden py-6 space-y-8">
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-bolt text-red-500" aria-hidden="true"></i>
+                                Sobrecarga Sensorial em Autismo e TDAH
+                            </h3>
+                            <button onclick="speakText('A sobrecarga sensorial ocorre quando o cérebro recebe mais estímulos visuais, sonoros e táteis do que consegue processar. Notificações excessivas, luzes piscantes e ruídos simultâneos levam à paralisia e crises de ansiedade.')" class="text-sm text-amber-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Ouvir Explicação
+                            </button>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            No Autismo e TDAH, o filtro de estímulos irrelevantes funciona de forma diferente. Enquanto uma pessoa neurotípica ignora propagandas piscantes e ruídos de fundo, uma pessoa autista em sobrecarga sente cada estímulo simultaneamente com extrema intensidade física.
+                        </p>
+                    </div>
+
+                    <!-- SIMULADOR INTENSO E CAÓTICO -->
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Simulador Imersivo do Caos Sensorial</h3>
+                                <p class="text-xs text-slate-400">Tente ler o formulário de compra urgente enquanto a simulação ocorre.</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button onclick="toggleIntenseSensory()" id="btn-sensory-intense" class="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-extrabold rounded-xl text-xs uppercase tracking-wider shadow-lg animate-pulse">
+                                    <i class="fa-solid fa-skull" aria-hidden="true"></i> Iniciar Crise Sensorial
+                                </button>
+                                <button onclick="activateCalmMode()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl text-xs uppercase tracking-wider shadow-lg">
+                                    <i class="fa-solid fa-shield-heart" aria-hidden="true"></i> Ativar Filtro de Calma
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- ARENA DE SIMULAÇÃO INTENSA -->
+                        <div id="sensory-arena" class="relative p-8 bg-slate-950 rounded-2xl border-2 border-slate-700 min-h-[450px] flex flex-col justify-between overflow-hidden transition-all duration-200">
+                            
+                            <!-- Overlay de ruído visual/estático e strobe -->
+                            <div id="sensory-strobe-overlay" class="pointer-events-none absolute inset-0 hidden z-10"></div>
+
+                            <!-- POP-UPS ESTRESSANTES GERADOS VIA JS -->
+                            <div id="popups-container" class="absolute inset-0 pointer-events-none z-20"></div>
+
+                            <!-- MENSAGEM DE TAREFA SOB ESTRESSE -->
+                            <div class="z-0 space-y-6 max-w-xl mx-auto bg-slate-900/90 p-6 rounded-xl border border-slate-700 shadow-2xl backdrop-blur-md">
+                                <div class="space-y-2">
+                                    <span class="px-2 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded text-[10px] font-bold">SUA TAREFA URGENTE:</span>
+                                    <h4 class="text-lg font-bold text-white">Confirme o agendamento da sua consulta médica:</h4>
+                                    <p id="sensory-reading-text" class="text-xs text-slate-300 leading-relaxed">
+                                        Data: 15 de Outubro às 14:00. Caso o botão correto não seja pressionado em menos de 30 segundos, seu atendimento será permanentemente cancelado.
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button onclick="alert('Incorreto! Essa opção adicionou mais taxas.')" class="p-3 bg-slate-800 hover:bg-slate-700 text-xs border border-slate-600 rounded text-slate-300">
+                                        Cancelar Agendamento
+                                    </button>
+                                    <button onclick="handleSensorySuccess()" class="p-3 bg-amber-500 hover:bg-amber-400 text-xs font-bold text-black rounded shadow-lg">
+                                        Confirmar Consulta Gratuita
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- BARRA DE STATUS SENSORIAL -->
+                            <div class="z-0 pt-4 flex items-center justify-between border-t border-slate-800 text-xs text-slate-400">
+                                <span>Status do Ambiente: <strong id="sensory-env-status" class="text-emerald-400">Ambiente Calmo (Acessível)</strong></span>
+                                <span>Decibéis Simulados: <strong id="sensory-db" class="text-slate-300">30 dB</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 5. AFASIA & PROCESSAMENTO DE LINGUAGEM ================= -->
+                <div id="panel-aphasia" role="tabpanel" class="hidden py-6 space-y-8">
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-language text-amber-400" aria-hidden="true"></i>
+                                O que é Afasia e Transtornos de Linguagem?
+                            </h3>
+                            <button onclick="speakText('A Afasia é uma condição decorrente de lesões cerebrais ou AVC que afeta a capacidade de processar, compreender e expressar a linguagem verbal e escrita. Pessoas com afasia navegam melhor em sites que usam pictogramas e ícones visuais claros.')" class="text-sm text-amber-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Ouvir Explicação
+                            </button>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            Para quem tem afasia, ler um parágrafo convencional é como tentar decifrar um idioma desconhecido. Palavras perdem o sentido e a ordem se confunde.
+                        </p>
+                    </div>
+
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-white">Simulador de Perspectiva de Afasia</h3>
+                            <button onclick="toggleAphasiaSim()" id="btn-aphasia" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-lg text-xs">
+                                Ativar Efeito de Afasia
+                            </button>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Texto Simulado -->
+                            <div class="p-5 bg-slate-900 rounded-xl border border-slate-700 space-y-3">
+                                <h4 class="text-xs font-bold text-amber-400 uppercase">Texto Informativo:</h4>
+                                <p id="aphasia-text-target" class="text-base text-slate-200 leading-relaxed">
+                                    Em caso de emergência ou incêndio, utilize as escadas de serviço localizadas à esquerda do corredor principal. Não utilize os elevadores.
+                                </p>
+                            </div>
+
+                            <!-- Solução Pictográfica Acessível -->
+                            <div class="p-5 bg-slate-900 rounded-xl border border-slate-700 space-y-3">
+                                <h4 class="text-xs font-bold text-emerald-400 uppercase">Solução Acessível (Pictogramas e Ícones Universalmente Reconhecidos):</h4>
+                                <div class="flex items-center justify-around p-4 bg-slate-950 rounded-lg">
+                                    <div class="text-center space-y-1">
+                                        <i class="fa-solid fa-fire text-3xl text-red-500" aria-hidden="true"></i>
+                                        <p class="text-[10px] font-bold">Fogo</p>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-right text-slate-500" aria-hidden="true"></i>
+                                    <div class="text-center space-y-1">
+                                        <i class="fa-solid fa-stairs text-3xl text-emerald-400" aria-hidden="true"></i>
+                                        <p class="text-[10px] font-bold">Escadas</p>
+                                    </div>
+                                    <i class="fa-solid fa-ban text-3xl text-red-600 ml-4" aria-hidden="true"></i>
+                                    <div class="text-center space-y-1">
+                                        <i class="fa-solid fa-elevator text-2xl text-slate-500" aria-hidden="true"></i>
+                                        <p class="text-[10px] font-bold">Elevador Proibido</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 6. SINESTESIA ================= -->
+                <div id="panel-synesthesia" role="tabpanel" class="hidden py-6 space-y-8">
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles text-purple-400" aria-hidden="true"></i>
+                                O que é a Sinestesia?
+                            </h3>
+                            <button onclick="speakText('A Sinestesia é uma condição neurológica em que as vias sensoriais se cruzam. Uma pessoa sinestésica pode ver cores brilhantes ao ouvir notas musicais, ou sentir gostos ao ler certas palavras.')" class="text-sm text-amber-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Ouvir Explicação
+                            </button>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            A Sinestesia não é considerada uma deficiência incapacitante, mas sim uma variação neurológica fascinante. Demonstra como o cérebro humano pode associar som a visões e formas em tempo real.
+                        </p>
+                    </div>
+
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+                        <h3 class="text-xl font-bold text-white">Laboratório Interativo de Sinestesia (Som → Cor & Forma)</h3>
+                        <p class="text-xs text-slate-300">Clique nos botões de frequência sonora abaixo ou digite no teclado para ver como os sons geram explosões de cores involuntárias:</p>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <button onclick="playSynesthesiaTone(261.63, 'C4 - Do', '#ef4444')" class="p-6 bg-red-900/40 border border-red-500/50 hover:bg-red-800/60 rounded-xl font-bold text-white flex flex-col items-center gap-2">
+                                <i class="fa-solid fa-music text-red-400" aria-hidden="true"></i>
+                                <span>Grave (Dó)</span>
+                                <span class="text-[10px] text-red-300">Gera Tons Vermelhos</span>
+                            </button>
+                            <button onclick="playSynesthesiaTone(329.63, 'E4 - Mi', '#eab308')" class="p-6 bg-yellow-900/40 border border-yellow-500/50 hover:bg-yellow-800/60 rounded-xl font-bold text-white flex flex-col items-center gap-2">
+                                <i class="fa-solid fa-music text-yellow-400" aria-hidden="true"></i>
+                                <span>Médio (Mí)</span>
+                                <span class="text-[10px] text-yellow-300">Gera Tons Amarelos</span>
+                            </button>
+                            <button onclick="playSynesthesiaTone(392.00, 'G4 - Sol', '#10b981')" class="p-6 bg-emerald-900/40 border border-emerald-500/50 hover:bg-emerald-800/60 rounded-xl font-bold text-white flex flex-col items-center gap-2">
+                                <i class="fa-solid fa-music text-emerald-400" aria-hidden="true"></i>
+                                <span>Melódico (Sol)</span>
+                                <span class="text-[10px] text-emerald-300">Gera Tons Verdes</span>
+                            </button>
+                            <button onclick="playSynesthesiaTone(523.25, 'C5 - Do Agudo', '#8b5cf6')" class="p-6 bg-purple-900/40 border border-purple-500/50 hover:bg-purple-800/60 rounded-xl font-bold text-white flex flex-col items-center gap-2">
+                                <i class="fa-solid fa-music text-purple-400" aria-hidden="true"></i>
+                                <span>Agudo (Dó Altas)</span>
+                                <span class="text-[10px] text-purple-300">Gera Tons Violeta</span>
+                            </button>
+                        </div>
+
+                        <!-- LONA DE EXPLOSÃO VISUAL SINESTÉSICA -->
+                        <div id="synesthesia-canvas-container" class="h-48 bg-slate-950 rounded-xl border border-slate-700 relative overflow-hidden flex items-center justify-center">
+                            <span id="synesthesia-prompt" class="text-xs text-slate-500">Aguardando estímulo sonoro...</span>
+                            <div id="synesthesia-burst" class="absolute w-full h-full pointer-events-none transition-all duration-700 opacity-0 scale-50 rounded-full blur-xl"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 7. DEFICIÊNCIA MOTORA & ARTRITE ================= -->
+                <div id="panel-motor" role="tabpanel" class="hidden py-6 space-y-8">
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-hand-pointer text-amber-400" aria-hidden="true"></i>
+                                Deficiência Motora Fina, Artrite e Síndrome do Túnel do Carpo
+                            </h3>
+                            <button onclick="speakText('Condições como Parkinson, artrite reumatoide e lesões por esforço repetitivo reduzem drasticamente a precisão do uso do mouse. Botões minúsculos ou sem espaçamento adequado impedem o clique.')" class="text-sm text-amber-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-volume-high" aria-hidden="true"></i> Ouvir Explicação
+                            </button>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed">
+                            Pessoas com rigidez nas articulações enfrentam resistência física ao segurar o mouse ou usar touchpads.
+                        </p>
+                    </div>
+
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-white">Simulador de Perda de Precisão Fina</h3>
+                            <button onclick="toggleFineMotorLag()" id="btn-motor-lag" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-lg text-xs">
+                                Ativar Resistência e Lag no Clique
+                            </button>
+                        </div>
+
+                        <div id="motor-zone" class="p-8 bg-slate-900 rounded-xl border border-slate-700 space-y-8">
+                            <div class="space-y-2">
+                                <p class="text-xs text-red-400 font-bold uppercase">1. Inacessível (Alvo de 12px sem margem):</p>
+                                <button onclick="alert('Conseguiu com muito esforço!')" class="text-[9px] px-1 py-0.5 bg-red-600 text-white rounded">
+                                    Enviar
+                                </button>
+                            </div>
+
+                            <div class="space-y-2">
+                                <p class="text-xs text-emerald-400 font-bold uppercase">2. Padrão WCAG Acessível (Mínimo de 44x44px):</p>
+                                <button onclick="alert('Sucesso! O botão amplo garante o clique rápido.')" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-base shadow-lg">
+                                    <i class="fa-solid fa-circle-check" aria-hidden="true"></i> Enviar Formulário Acessível
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 8. CÓDIGO WCAG ================= -->
+                <div id="panel-wcag" role="tabpanel" class="hidden py-6 space-y-8">
+                    <div class="bg-card bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-code text-amber-400" aria-hidden="true"></i>
+                            Guia Prático de Desenvolvimento Acessível (WCAG 2.1)
+                        </h3>
+                        <p class="text-slate-300 leading-relaxed">
+                            Consulte os códigos recomendados para garantir acessibilidade nativa em sistemas web.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="p-5 bg-red-950/40 border border-red-800/60 rounded-xl space-y-3">
+                            <span class="px-2.5 py-1 bg-red-800 text-white rounded text-xs font-bold uppercase">Má Prática</span>
+                            <pre class="bg-slate-900 p-4 rounded-lg text-xs text-red-300 overflow-x-auto"><code>&lt;!-- Sem suporte a leitores de tela --&gt;
+&lt;div onclick="salvar()" class="btn"&gt;
+   &lt;img src="salvar.png"&gt;
+&lt;/div&gt;</code></pre>
+                        </div>
+
+                        <div class="p-5 bg-emerald-950/40 border border-emerald-800/60 rounded-xl space-y-3">
+                            <span class="px-2.5 py-1 bg-emerald-800 text-white rounded text-xs font-bold uppercase">Padrão WCAG AAA</span>
+                            <pre class="bg-slate-900 p-4 rounded-lg text-xs text-emerald-300 overflow-x-auto"><code>&lt;!-- Elemento semântico e com suporte a teclado --&gt;
+&lt;button onclick="salvar()" aria-label="Salvar formulário" class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg"&gt;
+   &lt;i class="fa-solid fa-floppy-disk" aria-hidden="true"&gt;&lt;/i&gt; Salvar
+&lt;/button&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+        <footer role="contentinfo" class="bg-slate-900 border-t border-slate-800 text-slate-400 py-8 mt-12">
+            <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+                <p class="text-sm font-semibold text-slate-300">
+                    Portal Mundo Acessível — Plataforma Educativa e Simulador de Empatia
+                </p>
+                <p class="text-xs text-slate-500">
+                    Desenvolvido sob os princípios da Convenção sobre os Direitos das Pessoas com Deficiência da ONU e Diretrizes WCAG.
+                </p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        /* ESTADO GLOBAL */
+        let fontScale = 1.0;
+        let speechActive = false;
+        const synth = window.speechSynthesis;
+        let availableVoices = [];
+        let selectedVoice = null;
+
+        let voiceVolume = 1.0;
+        let voiceRate = 1.0;
+        let voicePitch = 1.0;
+
+        /* WEBAUDIO API PARA SONS SINTÉTICOS E SINESTESIA */
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioCtx;
+        }
+
+        function playBeep(freq, duration) {
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {
+                // AudioContext pode exigir interação do usuário
+            }
+        }
+
+        /* VOZES DO SISTEMA */
+        function loadVoices() {
+            if (!synth) return;
+            availableVoices = synth.getVoices();
+            const voiceSelect = document.getElementById('voice-select');
+            if (!voiceSelect) return;
+
+            voiceSelect.innerHTML = '';
+            const ptVoices = availableVoices.filter(v => v.lang.includes('pt') || v.lang.includes('PT'));
+            const otherVoices = availableVoices.filter(v => !v.lang.includes('pt') && !v.lang.includes('PT'));
+            const sortedVoices = [...ptVoices, ...otherVoices];
+
+            sortedVoices.forEach((voice) => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            });
+
+            if (!selectedVoice && sortedVoices.length > 0) {
+                selectedVoice = ptVoices.length > 0 ? ptVoices[0] : sortedVoices[0];
+                voiceSelect.value = selectedVoice.name;
+            }
+        }
+
+        if (synth) {
+            loadVoices();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = loadVoices;
+            }
+        }
+
+        function toggleAudioPanel() {
+            document.getElementById('audio-config-panel').classList.toggle('hidden');
+        }
+
+        function updateVoiceSelection() {
+            const voiceName = document.getElementById('voice-select').value;
+            selectedVoice = availableVoices.find(v => v.name === voiceName);
+        }
+
+        function updateAudioParams() {
+            voiceVolume = parseFloat(document.getElementById('voice-volume').value);
+            voiceRate = parseFloat(document.getElementById('voice-rate').value);
+            voicePitch = parseFloat(document.getElementById('voice-pitch').value);
+
+            document.getElementById('val-volume').innerText = `${Math.round(voiceVolume * 100)}%`;
+            document.getElementById('val-rate').innerText = `${voiceRate.toFixed(1)}x`;
+            document.getElementById('val-pitch').innerText = voicePitch.toFixed(1);
+        }
+
+        function testCurrentVoice() {
+            speakText("Testando sintetizador de voz com as configurações selecionadas.");
+        }
+
+        function stopVoice() {
+            if (synth) synth.cancel();
+            setWaveStatus(false);
+        }
+
+        function setWaveStatus(isSpeaking) {
+            const wave = document.getElementById('speech-wave');
+            const btn = document.getElementById('btn-toggle-speech');
+            if (isSpeaking) {
+                wave.classList.remove('hidden');
+                btn.classList.add('speaking-active');
+            } else {
+                wave.classList.add('hidden');
+                btn.classList.remove('speaking-active');
+            }
+        }
+
+        /* NAVEGAÇÃO ENTRE ABAS */
+        function switchTab(tabName) {
+            const tabs = ['color', 'blind', 'deaf', 'sensory', 'aphasia', 'synesthesia', 'motor', 'wcag'];
+            
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                const panel = document.getElementById(`panel-${t}`);
+                
+                if (t === tabName) {
+                    btn.setAttribute('aria-selected', 'true');
+                    btn.className = "inline-flex items-center p-4 border-b-2 border-amber-500 text-amber-400 gap-2 text-base font-bold";
+                    panel.classList.remove('hidden');
+                } else {
+                    btn.setAttribute('aria-selected', 'false');
+                    btn.className = "inline-flex items-center p-4 border-b-2 border-transparent hover:text-slate-200 gap-2 text-base font-bold text-slate-400";
+                    panel.classList.add('hidden');
+                }
+            });
+
+            if (speechActive) {
+                speakText(`Aba de ${tabName} selecionada.`);
+            }
+        }
+
+        /* AJUSTES DE TELA */
+        function changeFontSize(delta) {
+            fontScale = Math.min(Math.max(fontScale + delta, 0.8), 1.6);
+            document.documentElement.style.setProperty('--font-scale', fontScale);
+        }
+
+        function resetFontSize() {
+            fontScale = 1.0;
+            document.documentElement.style.setProperty('--font-scale', 1.0);
+        }
+
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
+
+        function toggleScreenReader() {
+            speechActive = !speechActive;
+            document.getElementById('speech-status').innerText = speechActive ? "Ativa" : "Inativa";
+            if (speechActive) speakText("Leitor de voz ativado.");
+        }
+
+        function speakText(text) {
+            if (!synth) return;
+            synth.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            if (selectedVoice) utterance.voice = selectedVoice;
+            utterance.volume = voiceVolume;
+            utterance.rate = voiceRate;
+            utterance.pitch = voicePitch;
+            utterance.lang = selectedVoice ? selectedVoice.lang : 'pt-BR';
+
+            utterance.onstart = () => setWaveStatus(true);
+            utterance.onend = () => setWaveStatus(false);
+            utterance.onerror = () => setWaveStatus(false);
+
+            synth.speak(utterance);
+        }
+
+        function applyGlobalFilter(filterClass) {
+            document.getElementById('simulated-wrapper').className = "flex-grow flex flex-col transition-all " + (filterClass !== 'none' ? filterClass : '');
+        }
+
+        function setUrbanFilter(filterClass) {
+            document.getElementById('urban-scene-container').className = "grid md:grid-cols-2 gap-6 transition-all duration-300 " + (filterClass !== 'none' ? filterClass : '');
+        }
+
+        function setEyePathology(pathologyClass) {
+            document.getElementById('eye-pathology-container').className = "p-8 bg-slate-900 rounded-xl border border-slate-700 relative overflow-hidden space-y-4 transition-all duration-300 " + (pathologyClass !== 'none' ? pathologyClass : '');
+        }
+
+        /* SIMULADOR DE MOSCAS VOLANTES (FLOATERS) */
+        let floatersActive = false;
+
+        function toggleFloaters() {
+            floatersActive = !floatersActive;
+            const dots = [document.getElementById('floater-1'), document.getElementById('floater-2'), document.getElementById('floater-3')];
+            dots.forEach(d => d.classList.toggle('hidden', !floatersActive));
+            document.getElementById('btn-floaters').innerText = floatersActive ? "Desativar Moscas Volantes" : "Ativar Moscas Volantes (Floaters)";
+        }
+
+        function updateFloatersPosition(e) {
+            if (!floatersActive) return;
+            const container = document.getElementById('eye-pathology-container');
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const f1 = document.getElementById('floater-1');
+            const f2 = document.getElementById('floater-2');
+            const f3 = document.getElementById('floater-3');
+
+            f1.style.transform = `translate(${x + 15}px, ${y + 10}px)`;
+            f2.style.transform = `translate(${x - 30}px, ${y - 20}px)`;
+            f3.style.transform = `translate(${x + 40}px, ${y - 35}px)`;
+        }
+
+        /* SIMULADOR DE SOBRECARGA SENSORIAL INTENSIFICADO */
+        let sensoryInterval = null;
+        let isIntenseSensory = false;
+
+        const popupTexts = [
+            "⚠️ URGENTE: Atualize seus dados agora!",
+            "🔔 Notificação: 15 novas mensagens não lidas!",
+            "💥 OFERTA EXPIRA EM 05 SEGUNDOS!",
+            "🔊 Ruído Urbano de Trânsito: 95 dB",
+            "⚠️ Bateria Fraca: Conecte o carregador!"
+        ];
+
+        function toggleIntenseSensory() {
+            if (isIntenseSensory) {
+                activateCalmMode();
+            } else {
+                isIntenseSensory = true;
+                const arena = document.getElementById('sensory-arena');
+                const overlay = document.getElementById('sensory-strobe-overlay');
+                const status = document.getElementById('sensory-env-status');
+                const db = document.getElementById('sensory-db');
+
+                arena.classList.add('sensory-shake');
+                overlay.classList.remove('hidden');
+                overlay.classList.add('sensory-strobe');
+
+                status.innerText = "🚨 CRISE SENSORIAL CRÍTICA";
+                status.className = "text-red-500 font-extrabold animate-pulse";
+                db.innerText = "110 dB (Ensurdecedor)";
+
+                // Gerar pop-ups rápidos e beeps estressantes
+                sensoryInterval = setInterval(() => {
+                    generateSensoryPopup();
+                    playBeep(400 + Math.random() * 800, 0.1);
+                }, 700);
+            }
+        }
+
+        function generateSensoryPopup() {
+            const container = document.getElementById('popups-container');
+            const popup = document.createElement('div');
+            
+            const randomText = popupTexts[Math.floor(Math.random() * popupTexts.length)];
+            const top = Math.random() * 70;
+            const left = Math.random() * 60;
+
+            popup.className = "absolute p-3 bg-red-600 text-white font-extrabold text-xs rounded-lg shadow-2xl border-2 border-yellow-300 pointer-events-auto transition-all animate-bounce";
+            popup.style.top = `${top}%`;
+            popup.style.left = `${left}%`;
+            popup.innerText = randomText;
+
+            container.appendChild(popup);
+
+            setTimeout(() => {
+                popup.remove();
+            }, 2500);
+        }
+
+        function activateCalmMode() {
+            isIntenseSensory = false;
+            clearInterval(sensoryInterval);
+
+            const arena = document.getElementById('sensory-arena');
+            const overlay = document.getElementById('sensory-strobe-overlay');
+            const container = document.getElementById('popups-container');
+            const status = document.getElementById('sensory-env-status');
+            const db = document.getElementById('sensory-db');
+
+            arena.classList.remove('sensory-shake');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('sensory-strobe');
+            container.innerHTML = '';
+
+            status.innerText = "Ambiente Calmo e Acessível";
+            status.className = "text-emerald-400 font-bold";
+            db.innerText = "25 dB (Silencioso)";
+        }
+
+        function handleSensorySuccess() {
+            activateCalmMode();
+            alert("Parabéns! Você conseguiu responder. Observe como ativar o Modo Calmo reduz instantaneamente o estresse cognitivo.");
+        }
+
+        /* SIMULADOR DE AFASIA */
+        let isAphasiaActive = false;
+
+        function toggleAphasiaSim() {
+            isAphasiaActive = !isAphasiaActive;
+            const target = document.getElementById('aphasia-text-target');
+            const btn = document.getElementById('btn-aphasia');
+
+            if (isAphasiaActive) {
+                btn.innerText = "Restaurar Texto Original";
+                target.innerText = "Em zixu de bramência ou flogo, tilize as skadas de fluxo kadas à ikerda do coror. Não ilize os elvadores.";
+            } else {
+                btn.innerText = "Ativar Efeito de Afasia";
+                target.innerText = "Em caso de emergência ou incêndio, utilize as escadas de serviço localizadas à esquerda do corredor principal. Não utilize os elevadores.";
+            }
+        }
+
+        /* SINESTESIA INTERATIVA */
+        function playSynesthesiaTone(freq, noteLabel, colorHex) {
+            playBeep(freq, 0.4);
+
+            const burst = document.getElementById('synesthesia-burst');
+            const prompt = document.getElementById('synesthesia-prompt');
+
+            prompt.innerText = `Sensação Visual Gerada pela Nota ${noteLabel}`;
+            burst.style.backgroundColor = colorHex;
+            burst.style.boxShadow = `0 0 80px ${colorHex}`;
+            burst.classList.remove('opacity-0', 'scale-50');
+            burst.classList.add('opacity-80', 'scale-100');
+
+            setTimeout(() => {
+                burst.classList.remove('opacity-80', 'scale-100');
+                burst.classList.add('opacity-0', 'scale-50');
+            }, 600);
+        }
+
+        /* RESISTÊNCIA MOTORA / LAG */
+        let isMotorLagActive = false;
+
+        function toggleFineMotorLag() {
+            isMotorLagActive = !isMotorLagActive;
+            const btn = document.getElementById('btn-motor-lag');
+            btn.innerText = isMotorLagActive ? "Desativar Lag/Resistência" : "Ativar Resistência e Lag no Clique";
+        }
+
+        document.getElementById('motor-zone').addEventListener('click', (e) => {
+            if (isMotorLagActive) {
+                // Simular atraso na resposta do clique por artrite/rigidez
+                e.preventDefault();
+                setTimeout(() => {}, 400);
+            }
+        }, true);
+    </script>
+</body>
+</html>
